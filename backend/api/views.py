@@ -6,14 +6,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from products.models import Products
+from products.serializers import ProductsSerializer
 
 # @api_view(['POST']) #--> will throw error {"detail":"Method \"GET\" not allowed."} and status code 405
 # @api_view(['GET','POST']) --> can be used for multiple methods
 @api_view(['GET'])#--> will get the data
 def api_home(request, *args, **kwargs):
-    model_data = Products.objects.all().order_by('?').first()
+    instance = Products.objects.all().order_by('?').first()
     data={}
-    if model_data:
+    if instance:
         # without using model_to_dict
 
         # data['id'] = model_data.id
@@ -22,6 +23,10 @@ def api_home(request, *args, **kwargs):
         # data['price'] = model_data.price
 
         # using model_to_dict
-        data = model_to_dict(model_data,fields=['id','title','price'])
+        #data = model_to_dict(model_data,fields=['id','title','price','sale_price'])
+
+        # using serializer
+        serializer = ProductsSerializer(instance)
+        data = serializer.data
     return Response(data)# --> will use JsonResponse without using django rest framework
 
