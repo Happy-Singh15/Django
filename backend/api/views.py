@@ -1,11 +1,11 @@
 # from django.http import JsonResponse #--> without using django rest framework
-from django.forms.models import model_to_dict
-import json
+# from django.forms.models import model_to_dict
+# import json
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from products.models import Products
+# from products.models import Products
 from products.serializers import ProductsSerializer
 
 
