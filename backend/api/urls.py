@@ -4,5 +4,5 @@ from .views import api_home
 
 urlpatterns= [
     path('',api_home),
-    path('products/',include('products.urls'))#--> can also be included in urls of cfehome
+    path('products/',include('products.urls'))#--> can also be included in cfehome urls directly with another endpoint 
 ]
