@@ -43,4 +43,4 @@ def api_home(request, *args, **kwargs):
         # instance = serializer.save() #--> will save the data in database
         data = serializer.data
         print(data)
-        return Response(serializer.data)
+        return Response(data)
