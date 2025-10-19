@@ -4,7 +4,7 @@ from .models import Products
 from .serializers import ProductsSerializer
 
 
-class ProductsCreateAPIView(generics.CreateAPIView):
+class ProductsListCreateAPIView(generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
 
@@ -18,10 +18,19 @@ class ProductsCreateAPIView(generics.CreateAPIView):
         serializer.save(content=content)
         # can be used to send a signal using django
 
-product_create_view = ProductsCreateAPIView.as_view()
+product_list_create_view = ProductsListCreateAPIView.as_view()
 
 class ProductsDetailAPIView(generics.RetrieveAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
 
 product_detail_view = ProductsDetailAPIView.as_view()#--> can also be directly used in urls.py of products as view.ProductsDetailAPIView.as_view instead of product_detail_view
+
+
+#Only for List view(get method) but i used create list view which use post as well as get method
+
+# class ProductsListAPIView(generics.ListAPIView):
+#     queryset = Products.objects.all()
+#     serializer_class = ProductsSerializer
+
+# product_list_view = ProductsListAPIView.as_view()
