@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
+from api.authentication import TokenAuthentication
+
 from .models import Products
 from .serializers import ProductsSerializer
 from .permissions import IsStaffEditorPermission
@@ -15,7 +17,8 @@ class ProductsListCreateAPIView(generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
     authentication_classes =[
-        authentication.SessionAuthentication
+        authentication.SessionAuthentication,
+        TokenAuthentication
     ]
     permission_classes = [
         permissions.IsAdminUser,#--> order of the permissions matter the permission on top will have high priority
