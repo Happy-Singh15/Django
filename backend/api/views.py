@@ -36,11 +36,11 @@ from products.serializers import ProductsSerializer
 
 
 # For POST Request
-@api_view(['POST'])
-def api_home(request, *args, **kwargs):
-    serializer = ProductsSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        # instance = serializer.save() #--> will save the data in database
-        data = serializer.data
-        print(data)
-        return Response(data)
+# @api_view(['POST'])
+# def api_home(request, *args, **kwargs):
+#     serializer = ProductsSerializer(data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#         # instance = serializer.save() #--> will save the data in database
+#         data = serializer.data
+#         print(data)
+#         return Response(data)
