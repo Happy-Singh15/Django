@@ -6,5 +6,5 @@ data= {
     'title':'Hello world using update view'
 }
 
-update_response = requests.post(endpoint,json=data)
+update_response = requests.put(endpoint,json=data)
 print(update_response.json())
