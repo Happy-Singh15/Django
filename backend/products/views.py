@@ -69,46 +69,47 @@ product_delete_view = ProductsDestroyAPIView.as_view()
 
 #Mixins(similar to function based views but using classes)
 
-class ProductsMixinView(
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    generics.GenericAPIView
-    ):
+# class ProductsMixinView(
+#     mixins.ListModelMixin,
+#     mixins.RetrieveModelMixin,
+#     mixins.CreateModelMixin,
+#     mixins.UpdateModelMixin,
+#     mixins.DestroyModelMixin,
+#     generics.GenericAPIView
+#     ):
 
-    queryset = Products.objects.all()
-    serializer_class = ProductsSerializer
+#     queryset = Products.objects.all()
+#     serializer_class = ProductsSerializer
 
-    def get(self,request,*args,**kwargs):
-        pk = kwargs.get('pk')
-        if pk is not None:
-            return self.retrieve(request,*args,**kwargs)
-        return self.list(request,*args,**kwargs)
+#     def get(self,request,*args,**kwargs):
+#         pk = kwargs.get('pk')
+#         if pk is not None:
+#             return self.retrieve(request,*args,**kwargs)
+#         return self.list(request,*args,**kwargs)
 
-    def post(self,request,*args,**kwargs):
-        if kwargs.get('pk'):
-            return self.update(request,*args,**kwargs)# --> should use update in put method but i tried it using in post.
-        return self.create(request,*args,**kwargs)
+#     def post(self,request,*args,**kwargs):
+#         if kwargs.get('pk'):
+#             return self.update(request,*args,**kwargs)# --> should use update in put method but i tried it using in post.
+#         return self.create(request,*args,**kwargs)
     
-    def delete(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
+#     def delete(self, request, *args, **kwargs):
+#         return super().destroy(request, *args, **kwargs)
     
-    def perform_create(self,serializer):
-        title = serializer.validated_data.get('title')
-        content = serializer.validated_data.get('content')# or None
-        if content is None:
-            content = "this is perform_create from create mixin"
-        serializer.save(content=content)
+#     def perform_create(self,serializer):
+#         title = serializer.validated_data.get('title')
+#         content = serializer.validated_data.get('content')# or None
+#         if content is None:
+#             content = "this is perform_create from create mixin"
+#         serializer.save(content=content)
 
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        instance.content = 'this is updated content from mixin'
-        instance = serializer.save()
+#     def perform_update(self, serializer):
+#         instance = serializer.save()
+#         instance.content = 'this is updated content from mixin'
+#         instance = serializer.save()
+
+# product_mixin_view = ProductsMixinView.as_view()
 
 
-product_mixin_view = ProductsMixinView.as_view()
 
 # Function based views
 
