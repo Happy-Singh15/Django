@@ -14,4 +14,4 @@ if product_id:
     if delete_response.status_code==204:
         print(f'product with id {product_id} is deleted.')
     else:
-        print(f'product with id {product_id} does not exists.')
+        print('status :',delete_response.status_code,'\n',delete_response.json())
