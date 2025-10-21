@@ -1,27 +1,29 @@
-from rest_framework import generics,mixins,permissions,authentication
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.http import Http404
-from django.shortcuts import get_object_or_404
+from rest_framework import generics,mixins,permissions
+# from rest_framework.decorators import api_view
+# from rest_framework.response import Response
+# from django.http import Http404
+# from django.shortcuts import get_object_or_404
 
-from api.authentication import TokenAuthentication
+
+from api.mixins import StaffPermissionMixin
 
 from .models import Products
 from .serializers import ProductsSerializer
-from .permissions import IsStaffEditorPermission
 
 
 # Class based views
 
-class ProductsListCreateAPIView(generics.ListCreateAPIView):
+class ProductsListCreateAPIView(
+    StaffPermissionMixin,
+    generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
     
-    permission_classes = [
-        permissions.IsAdminUser,#--> order of the permissions matter the permission on top will have high priority
-        IsStaffEditorPermission,
-        # permissions.IsAuthenticatedOrReadOnly #--> (GET Method) will give the access to read the data without authentication
-    ]
+    # permission_classes = [
+    #     permissions.IsAdminUser,#--> order of the permissions matter the permission on top will have high priority
+    #     IsStaffEditorPermission,
+    #     # permissions.IsAuthenticatedOrReadOnly #--> (GET Method) will give the access to read the data without authentication
+    # ]
 
     def perform_create(self,serializer):
         # serializer.save(user=self.request.user) #--> will use in future
