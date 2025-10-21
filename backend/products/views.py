@@ -16,10 +16,7 @@ from .permissions import IsStaffEditorPermission
 class ProductsListCreateAPIView(generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
-    authentication_classes =[
-        authentication.SessionAuthentication,
-        TokenAuthentication
-    ]
+    
     permission_classes = [
         permissions.IsAdminUser,#--> order of the permissions matter the permission on top will have high priority
         IsStaffEditorPermission,
