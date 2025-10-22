@@ -5,7 +5,9 @@ from rest_framework import generics,mixins,permissions
 # from django.shortcuts import get_object_or_404
 
 
-from api.mixins import StaffPermissionMixin
+from api.mixins import (
+    StaffPermissionMixin,
+    UserQuerySetMixin)
 
 from .models import Products
 from .serializers import ProductsSerializer
@@ -14,6 +16,7 @@ from .serializers import ProductsSerializer
 # Class based views
 
 class ProductsListCreateAPIView(
+    UserQuerySetMixin,
     StaffPermissionMixin,
     generics.ListCreateAPIView):
     queryset = Products.objects.all()
@@ -35,13 +38,13 @@ class ProductsListCreateAPIView(
         serializer.save(user=self.request.user,content=content)
         # can be used to send a signal using django
 
-    def get_queryset(self,*args,**kwargs):
-        qs = super().get_queryset(*args,**kwargs)
-        request = self.request
-        user = request.user
-        if not user.is_authenticated:
-            return Products.objects.none()
-        return qs.filter(user=user)
+    # def get_queryset(self,*args,**kwargs):
+    #     qs = super().get_queryset(*args,**kwargs)
+    #     request = self.request
+    #     user = request.user
+    #     if not user.is_authenticated:
+    #         return Products.objects.none()
+    #     return qs.filter(user=user)
 
 product_list_create_view = ProductsListCreateAPIView.as_view()
 
