@@ -61,7 +61,6 @@ class ProductsUpdateAPIView(generics.UpdateAPIView):
         instance = serializer.save()
         if not instance.content:
             instance.content = instance.title
-            instance = serializer.save()
 
 product_update_view = ProductsUpdateAPIView.as_view()
 
